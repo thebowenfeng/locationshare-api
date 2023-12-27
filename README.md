@@ -27,9 +27,10 @@ The client then uses said session to call Google's internal location share API t
 
 Sample usages are in `main.py`
 
-`class Client(persist: bool = False, persist_directory: str = None)`
+`class Client(persist: bool = False, persist_directory: str = None, timeout: int = 30000)`
 - `persist`: Whether or not the session is locally cached to be used by subsequent invocation of `Client` in the same or a different program instance.
 - `persist_directory`: Cache location. Note that the cache location must be consistent for all clients that wishes to use the cached session.
+- `timeout`: Max allowed time to login before browser timeouts (in milliseconds)
 
 `Client.refresh_session()`: Refresh session cookies to prevent stale sessions.
 

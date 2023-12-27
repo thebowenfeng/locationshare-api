@@ -6,10 +6,11 @@ import pickle
 
 
 class Client:
-    def __init__(self, persist: bool = False, persist_directory=None):
+    def __init__(self, persist: bool = False, persist_directory=None, timeout: int = 30000):
         self._session = None
         self.persist = persist
         self.persist_directory = os.getcwd() if persist_directory is None else persist_directory
+        self.timeout = timeout
 
     async def __aenter__(self):
         await self._login()
@@ -47,7 +48,7 @@ class Client:
                     await page.click("#gb_70", timeout=10000)
                 except TimeoutError:
                     raise Exception("Unable to login. Please restart")
-                await page.wait_for_url("https://www.google.com/maps**")
+                await page.wait_for_url("https://www.google.com/maps**", timeout=self.timeout)
 
             cookies = await context.cookies("https://www.google.com")
             self._session = ClientSession(cookies={k: v for k, v in list(map(lambda x: (x["name"], x["value"]),
