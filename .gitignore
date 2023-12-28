@@ -3,3 +3,5 @@ dist
 gmaps_locationshare_api.egg-info
 .idea
 myscript.py
+logs.txt
+logs.pickle

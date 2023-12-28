@@ -96,8 +96,11 @@ class Client:
                           '!1e68!2m2!1sset!2sRoadmap!4e1!5m4!1e4!8m2!1e0!'
                           '1e1!6m9!1e12!2i2!26m1!4b1!30m1!'
                           '1f1.3953487873077393!39b1!44e1!50e0!23i4111425')}
-        res = await self._session.get("https://www.google.com/maps/rpc/locationsharing/read", params=payload)
-        return await res.text()
+        return await self._session.get("https://www.google.com/maps/rpc/locationsharing/read", params=payload)
 
     async def get_data(self):
-        return _parse_raw_data(await self._get_raw_data())
+        res = await self._get_raw_data()
+        if res.status == 200:
+            return _parse_raw_data(await res.text())
+        else:
+            return []
